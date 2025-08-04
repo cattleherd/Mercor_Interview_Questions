@@ -141,16 +141,189 @@ This is often the most intuitive traversal, especially for a Binary Search Tree.
 ---
 
 #### Graphs
-- [ ] **Definition:** What is a graph? (A collection of nodes/vertices connected by edges).
-- [ ] **Key Terminology:** Vertex, Edge, Directed vs. Undirected, Weighted vs. Unweighted, Adjacency List/Matrix.
-- [ ] **Traversal Algorithms:**
-    - [ ] **Breadth-First Search (BFS):** How does it work? (Explores level by level). What data structure does it use? (**Queue**).
-    - [ ] **Depth-First Search (DFS):** How does it work? (Explores as far as possible down one path before backtracking). What data structure does it use? (**Stack**, can be implemented recursively or iteratively).
+- [✅] **Definition:** What is a graph? (A collection of nodes/vertices connected by edges).
+- [✅] **Key Terminology:** Vertex, Edge, Directed vs. Undirected, Weighted vs. Unweighted, Adjacency List/Matrix.
+- [✅] **Traversal Algorithms:**
+    - [✅] **Breadth-First Search (BFS):** How does it work? (Explores level by level). What data structure does it use? (**Queue**).
+    - [✅] **Depth-First Search (DFS):** How does it work? (Explores as far as possible down one path before backtracking). What data structure does it use? (**Stack**, can be implemented recursively or iteratively).
 
-> **My Explanation:**
->
-> *(Your notes here on graph definitions and the step-by-step process of BFS and DFS...)*
 
+### Definition: What is a graph?
+
+At its core, a graph is a data structure used to represent relationships or connections between things. It consists of two main components:
+
+*   **Vertices (or Nodes):** These are the fundamental entities or objects within the graph.
+*   **Edges:** These are the lines that connect pairs of vertices, representing a relationship between them.
+
+Think of a social network like LinkedIn. Each person is a **vertex**, and a "connection" between two people is an **edge**. Or think of Google Maps: cities are **vertices**, and the roads between them are **edges**.
+
+### Key Terminology
+
+*   **Vertex (or Node):** An individual data point or object. In the map example, a vertex is a city.
+*   **Edge:** The connection or relationship between two vertices. In the map example, an edge is a road connecting two cities.
+
+*   **Directed vs. Undirected:** This describes the nature of the connection.
+    *   **Undirected Graph:** Edges are two-way streets. If there's an edge between vertex A and vertex B, the relationship is mutual. Think of a Facebook friendship: if you are friends with someone, they are also friends with you. `(A) --- (B)`
+    *   **Directed Graph:** Edges are one-way streets, represented with arrows. An edge from A to B doesn't imply an edge from B to A. Think of following someone on Twitter/X: you can follow them, but they don't necessarily have to follow you back. `(A) ---> (B)`
+
+*   **Weighted vs. Unweighted:** This describes if the connections have a "cost".
+    *   **Unweighted Graph:** Edges simply represent a connection. The only thing that matters is *if* a path exists. It's great for modeling "friend" networks where all friendships are equal.
+    *   **Weighted Graph:** Each edge is assigned a numerical value or "weight." This weight can represent distance, time, cost, or any other metric. This is essential for applications like GPS navigation, where the goal is to find the *shortest* or *fastest* path (the path with the lowest total weight).
+
+*   **Adjacency List vs. Adjacency Matrix:** These are the two primary ways to represent a graph in code.
+
+    Imagine a simple graph: A is connected to B and C.
+
+    *   **Adjacency List:** A map or dictionary where each key is a vertex, and its value is a list of the vertices it's connected to. This is very memory-efficient for graphs with few edges ("sparse" graphs).
+        ```json
+        // Adjacency List Representation
+        {
+          "A": ["B", "C"],
+          "B": ["A"],
+          "C": ["A"]
+        }
+        ```
+    *   **Adjacency Matrix:** A 2D grid (an array of arrays) where `matrix[i][j] = 1` if there's an edge from vertex `i` to `j`, and `0` otherwise. This is faster for checking a specific edge's existence but uses more memory, especially for sparse graphs.
+        ```
+        // Adjacency Matrix Representation (A=0, B=1, C=2)
+        //   A B C
+        // A [0,1,1]
+        // B [1,0,0]
+        // C [1,0,0]
+        ```
+
+###  Traversal Algorithms
+
+Traversal means "visiting" every vertex in a graph in a systematic way. The two most famous methods are BFS and DFS.
+
+#### Breadth-First Search (BFS)
+
+*   **How does it work?**
+    > BFS explores the graph **level by level**. It's like ripples spreading out in a pond. Starting from a source node, it first visits all its immediate neighbors. Then, it visits all the neighbors of those neighbors, and so on. It explores "wide" before it explores "deep."
+
+*   **What data structure does it use?** A **Queue**.
+    > **Why a Queue?** A queue follows a First-In, First-Out (FIFO) principle. This is perfect for a level-by-level search.
+    > 1. Add the starting vertex to the queue.
+    > 2. While the queue is not empty:
+    >    * Dequeue a vertex (let's call it `current`).
+    >    * Visit `current`.
+    >    * For each of `current`'s unvisited neighbors, add them to the *back* of the queue.
+    > This process guarantees that you visit all nodes at level `k` before moving on to any nodes at level `k+1`.
+    >
+    > *   **Primary Use Case:** Finding the shortest path in an **unweighted** graph.
+
+#### Depth-First Search (DFS)
+
+*   **How does it work?**
+    > DFS explores as far as possible down **one single path before backtracking**. It picks a path from the starting node and follows it to the very end (until it hits a dead end or an already visited node). Then, it backtracks to the last junction and tries the next available path. It explores "deep" before it explores "wide."
+
+*   **What data structure does it use?** A **Stack**.
+    > **Why a Stack?** A stack follows a Last-In, First-Out (LIFO) principle, which perfectly models the "go deep and backtrack" behavior.
+    >
+    > *   **Recursive Implementation:** The easiest way to implement DFS is with recursion. The "call stack" that programming languages use to manage function calls acts as our stack.
+    >     1. Visit a vertex `current`. Mark it as visited.
+    >     2. For each of `current`'s unvisited neighbors, recursively call the DFS function on that neighbor.
+    >     3. When a recursive call finishes (because it hit a dead end), it "returns," effectively popping off the call stack and backtracking to the previous vertex to try another path.
+    > *   **Iterative Implementation:** You can also implement DFS with an explicit `Stack` data structure, which avoids potential "stack overflow" errors on very deep graphs.
+    > *   **Primary Use Cases:** Detecting cycles in a graph, topological sorting (ordering tasks with dependencies), and solving puzzles like mazes.
+
+    ### 1. Shortest Path Algorithms
+
+> While BFS finds the shortest path in terms of the number of edges, these algorithms find the shortest path in **weighted** graphs, where "shortest" means "lowest total weight."
+
+---
+
+### Dijkstra's Algorithm
+
+#### The High-Level Goal & Analogy
+
+**Goal:** To find the shortest path from a single starting vertex to every other vertex in a weighted graph.
+
+**Key Constraint:** It only works correctly when all edge weights are **non-negative**. You can't have a road that takes "-5 minutes" to travel.
+
+### How It's Implemented: 
+
+To make this work in code, we need three key data structures.
+
+#### Data Structures
+
+1.  **Distances Map/Array:** This stores the shortest distance we have found *so far* from the start vertex to every other vertex.
+    *   We initialize the start vertex's distance to `0`.
+    *   We initialize every other vertex's distance to `Infinity`, because we haven't found a path to them yet.
+    *   `distances = { A: 0, B: Infinity, C: Infinity, D: Infinity }`
+
+2.  **Priority Queue:** This is the secret sauce. A priority queue stores vertices and lets us efficiently ask one question: **"Of all the vertices I can currently reach but haven't finalized, which one is closest to the start?"** Dijkstra's is a greedy algorithm. This means that at every single step, it makes the choice that looks best at that moment.  by always processing the node with the lowest total cost first (thanks to the priority queue), you guarantee that you find and finalize the shortest path to that specific node. The priority queue enforces the greedy choice when you want to visit a new node.
+
+3.  **Visited Set:** A set that keeps track of vertices for which we have already found the *final, guaranteed* shortest path. Once a vertex is in this set, we will never need to look at it again.
+
+#### The Recipe (The Algorithm Steps)
+
+Let's use a simple example graph. **Start = A**.
+
+*   `A -> B (weight 1)`
+*   `A -> D (weight 4)`
+*   `B -> C (weight 2)`
+*   `B -> D (weight 6)`
+*   `D -> C (weight 3)`
+
+**Step 0: Initialization**
+*   `distances = { A: 0, B: Infinity, C: Infinity, D: Infinity }`
+*   `priority_queue` contains `{ A with priority 0 }`
+*   `visited = {}` (Empty)
+
+**Step 1: First Iteration**
+*   The loop begins. **Extract the vertex with the lowest priority** from the `priority_queue`.
+    *   `current_vertex` = **A** (priority 0).
+*   Add **A** to the `visited` set. We have now finalized the shortest path to A (it's 0).
+*   **Check A's unvisited neighbors:** B and D.
+    *   **For B:** The distance to B *through A* is `distances[A] + weight(A->B)` => `0 + 1 = 1`.
+        *   Is `1` less than the current `distances[B]` (which is `Infinity`)? Yes.
+        *   **Update:** `distances[B] = 1`. Add `{B with priority 1}` to the `priority_queue`.
+    *   **For D:** The distance to D *through A* is `distances[A] + weight(A->D)` => `0 + 4 = 4`.
+        *   Is `4` less than `distances[D]` (`Infinity`)? Yes.
+        *   **Update:** `distances[D] = 4`. Add `{D with priority 4}` to the `priority_queue`.
+*   _End of Iteration 1 State:_
+    *   `distances = { A: 0, B: 1, C: Infinity, D: 4 }`
+    *   `priority_queue` contains `{ B: 1, D: 4 }`
+
+**Step 2: Second Iteration**
+*   **Extract the vertex with the lowest priority**:
+    *   `current_vertex` = **B** (priority 1).
+*   Add **B** to the `visited` set.
+*   **Check B's unvisited neighbors:** C and D.
+    *   **For C:** The distance to C *through B* is `distances[B] + weight(B->C)` => `1 + 2 = 3`.
+        *   Is `3` less than `distances[C]` (`Infinity`)? Yes.
+        *   **Update:** `distances[C] = 3`. Add `{C with priority 3}` to the `priority_queue`.
+    *   **For D:** The distance to D *through B* is `distances[B] + weight(B->D)` => `1 + 6 = 7`.
+        *   Is `7` less than `distances[D]` (`4`)? No. The path we already found (`A->D`) is better. **Do nothing.**
+*   _End of Iteration 2 State:_
+    *   `distances = { A: 0, B: 1, C: 3, D: 4 }`
+    *   `priority_queue` contains `{ C: 3, D: 4 }`
+
+**Step 3: Third Iteration**
+*   **Extract the vertex with the lowest priority**:
+    *   `current_vertex` = **C** (priority 3).
+*   Add **C** to the `visited` set.
+*   **Check C's unvisited neighbors:** None. (Or if it had neighbors, we'd check them).
+*   _End of Iteration 3 State:_
+    *   `distances = { A: 0, B: 1, C: 3, D: 4 }`
+    *   `priority_queue` contains `{ D: 4 }`
+
+**Step 4: Fourth Iteration**
+*   **Extract the vertex with the lowest priority**:
+    *   `current_vertex` = **D** (priority 4).
+*   Add **D** to `visited`.
+*   **Check D's unvisited neighbors:** C. But C is already in `visited`, so we ignore it.
+
+**Step 5: Finish**
+*   The `priority_queue` is now empty. The algorithm terminates.
+*   The final `distances` map `{ A: 0, B: 1, C: 3, D: 4 }` contains the shortest path from A to every other vertex.
+
+#### A\* (A-Star) Search Algorithm
+
+*   **What it is:** A "smarter" version of Dijkstra's. It adds a **heuristic**—an educated guess—to prioritize paths that are heading in the right direction.
+*   **How it works:** In addition to the actual cost from the start (like Dijkstra), it also estimates the cost to get from the current vertex *to the destination*. It prioritizes vertices with the lowest `(cost from start) + (estimated cost to end)`.
+*   **Use Case:** Video game pathfinding for characters. Why explore a path going away from the target when you can make an educated guess about the right direction?
 ---
 
 ### ✅ 3. Algorithms & Complexity
