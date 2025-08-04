@@ -1,19 +1,49 @@
 
 # SWE Interview Prep Checklist
 
-Use this checklist to track your study progress. For each concept, review the core ideas and then write your own summary in the "My Explanation" section to test your understanding.
-
 ### ✅ 1. Fundamental Data Structures
 
 #### Stacks & Queues
-- [ ] **Stack:** Define the Last-In, First-Out (LIFO) principle.
-- [ ] **Queue:** Define the First-In, First-Out (FIFO) principle.
-- [ ] **Key Operations:** Understand push, pop, peek (for stacks) and enqueue, dequeue, peek (for queues).
-- [ ] **Use Cases:** When would you choose one over the other?
+- [✅] **Stack:** Define the Last-In, First-Out (LIFO) principle.
+- [✅] **Queue:** Define the First-In, First-Out (FIFO) principle.
+- [✅] **Key Operations:** Understand push, pop, peek (for stacks) and enqueue, dequeue, peek (for queues).
+- [✅] **Use Cases:** When would you choose one over the other?
 
 > **My Explanation:**
->
-> *(Your notes here on the differences, principles, and applications of Stacks and Queues...)*
+**Stack operations**  
+- `push(x)`: add **x** to the top of the stack  
+- `pop()`: remove and return the top element (the most recently pushed)  
+- `peek()`: return (but do not remove) the top element  
+- `isEmpty()`: check whether the stack has no elements  
+
+**Queue operations**  
+- `enqueue(x)`: add **x** to the end (tail) of the queue  
+- `dequeue()`: remove and return the front element (the earliest enqueued)  
+- `peek()`: return (but do not remove) the front element  
+- `isEmpty()`: check whether the queue has no elements 
+
+**Use cases of Stack**
+- **Browser History**
+- when you click on a link, the visited page is added to the top of the stack, so when you want to go to the previous page visited you can just pop the currently visited page from the stack.
+- going forwards and backwards requires two stacks, undostack and redo stack. 
+- **DFS**
+- start at the current node. push it into the stack and mark as seen. Then repeat the next steps until no elements in stack:
+1) pop the next element in the stack
+2) Process it (print it etc)
+3) seeing if any of its neighbours are unseen, add it to the stack and mark them as seen.
+
+**Use case of Queue**
+- **CPU Scheduling**
+- When a process is ready to access CPU resources, it gets queued to a scheduler, and the scheduler dequeues these processes to get a time slice of CPU, afterwhich it gets requeued (round robin). This ensures that processes don't get starved by newer processes requesting CPU time after an earlier process has asked for resources earlier. This guarantees no process will wait indefinately.
+- **BFS**
+- start at current node, mark it as seen, enqueue it. Then repeat following steps until queue is empty
+1) dequeue next element from queue
+2) visit the node
+3) If any of the neighbors havent been seen/visited, enqueue them to the queue, and mark them as seen.
+
+***When to use either***
+1) If you need to do reversal or backtracking, use stack
+2) if arrival order is important or ensuring breadthfirst fairness, use queues.
 
 ---
 
@@ -265,3 +295,25 @@ Use this checklist to track your study progress. For each concept, review the co
 > **My Explanation:**
 >
 > *(Your personal checklist for manually testing a feature or page...)*
+
+
+---
+
+- explain restful api
+ - get post put and delete
+ - how they interact with web resources
+
+ - what is stateless communication (client has all data, no stored context on server)
+
+ - status codes? meaningful feedback, error handling and debugging
+
+ what makes rest api easier, simplcity in mind, use standard protocol like http, applications regardless of device since its standardized. consistent protocol easier for maitenence and integration for scalability
+
+ - how versioning, management of states, restful f
+
+
+ - do restful use json (lightweight easy to parse) or xml
+
+ - scalability how in restful, so the statelessness and uniform. dedicated routes, more scalable systems. 
+
+ decoupled services, independently as needed, servers (load balancer) withou tneeding to change api.  
