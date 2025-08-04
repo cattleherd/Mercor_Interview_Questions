@@ -48,12 +48,12 @@
 ---
 
 #### Arrays
-- [ ] **Definition:** What is an array and how is it stored in memory? (contiguous memory block, fixed size, same data type).
-- [ ] **Pros & Cons:** Fast O(1) access vs. slow O(n) insertion/deletion in the middle.
-- [ ] **Operations:**
+- [✅] **Definition:** What is an array and how is it stored in memory? (contiguous memory block, fixed size, same data type).
+- [✅] **Pros & Cons:** Fast O(1) access vs. slow O(n) insertion/deletion in the middle.
+- [✅] **Operations:**
     - [ ] How to add elements (e.g., appending, inserting at an index).
     - [ ] How to remove elements (e.g., from the end, from an index).
-- [ ] **Use Cases:** When is an array the right choice? (e.g., when you need frequent random access, storing data of a known size).
+- [✅] **Use Cases:** When is an array the right choice? (e.g., when you need frequent random access, storing data of a known size).
 
 > **My Explanation:**
 ### Arrays
