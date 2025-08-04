@@ -321,9 +321,20 @@ Let's use a simple example graph. **Start = A**.
 
 #### A\* (A-Star) Search Algorithm
 
-*   **What it is:** A "smarter" version of Dijkstra's. It adds a **heuristic**—an educated guess—to prioritize paths that are heading in the right direction.
-*   **How it works:** In addition to the actual cost from the start (like Dijkstra), it also estimates the cost to get from the current vertex *to the destination*. It prioritizes vertices with the lowest `(cost from start) + (estimated cost to end)`.
-*   **Use Case:** Video game pathfinding for characters. Why explore a path going away from the target when you can make an educated guess about the right direction?
+*   **What it is:** A "smarter" version of Dijkstra's. Dijkstra's algo is like an expanding circle of fire. It explores in all directions equally, focusing only on the path that is currently the shortest from the start. It has no concept of whether it's moving towards your destination or away from it. If the shortest next step is in the wrong direction, Dijkstra's will take it.
+
+  **How it works:** 
+
+- The priority to assign the next node to visit is `f(n) = g(n) + h(n)` where g(n) is the cost of the path, and h(n) is the heuristic or educated guess on the distance to the goal.
+
+- A heuristic is admissible if it never overestimates the actual cost. It must always guess a cost that is less than or equal to the real cost.
+- The `Euclidean distance` (the straight-line "as the crow flies" distance) is a perfect heuristic. You can never get from A to B faster than flying in a straight line, so it never overestimates the cost.
+
+*   **Use Case:** Video game pathfinding for characters. Why explore a path going away from the target when you can make an educated guess about the right direction? 
+
+- so A* is exactly like djikstra except for the priority queue it adds the heuristic
+
+
 ---
 
 ### ✅ 3. Algorithms & Complexity
