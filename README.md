@@ -51,8 +51,8 @@
 - [✅] **Definition:** What is an array and how is it stored in memory? (contiguous memory block, fixed size, same data type).
 - [✅] **Pros & Cons:** Fast O(1) access vs. slow O(n) insertion/deletion in the middle.
 - [✅] **Operations:**
-    - [ ] How to add elements (e.g., appending, inserting at an index).
-    - [ ] How to remove elements (e.g., from the end, from an index).
+    - [✅] How to add elements (e.g., appending, inserting at an index).
+    - [✅] How to remove elements (e.g., from the end, from an index).
 - [✅] **Use Cases:** When is an array the right choice? (e.g., when you need frequent random access, storing data of a known size).
 
 > **My Explanation:**
@@ -86,16 +86,57 @@ For `element[3]`: `1000 + (3 * 4) = 1000 + 12 = 1012`. This direct calculation i
 ### ✅ 2. Complex Data Structures
 
 #### Binary Trees
-- [ ] **Definition:** What is a binary tree? (A tree data structure where each node has at most two children).
-- [ ] **Key Terminology:** Node, Root, Parent, Child, Leaf, Subtree.
-- [ ] **Traversal Techniques:**
-    - [ ] **In-Order Traversal:** (Left, Root, Right). What is its primary use case? (e.g., visiting nodes in non-decreasing order in a BST).
-    - [ ] **Pre-Order Traversal:** (Root, Left, Right). What is its primary use case? (e.g., creating a copy of the tree).
-    - [ ] **Post-Order Traversal:** (Left, Right, Root). What is its primary use case? (e.g., deleting nodes from a tree).
+- [✅] **Definition:** What is a binary tree? (A tree data structure where each node has at most two children).
+- [✅] **Key Terminology:** Node, Root, Parent, Child, Leaf, Subtree.
+- [✅] **Traversal Techniques:**
+    - [✅] **In-Order Traversal:** (Left, Root, Right). What is its primary use case? (e.g., visiting nodes in non-decreasing order in a BST).
+    - [✅] **Pre-Order Traversal:** (Root, Left, Right). What is its primary use case? (e.g., creating a copy of the tree).
+    - [✅] **Post-Order Traversal:** (Left, Right, Root). What is its primary use case? (e.g., deleting nodes from a tree).
 
 > **My Explanation:**
->
-> *(Your notes here explaining each traversal method and why you'd use it...)*
+
+### 1. In-Order Traversal (Left, Root, Right)
+
+This is often the most intuitive traversal, especially for a Binary Search Tree.
+
+*   **The Rule:** For any given node, you recursively visit its **entire left subtree**, then **process the node itself** (the "Root"), and finally recursively visit its **entire right subtree**.
+
+*   **The "Why":** It's called "In-Order" because you process the root *in between* its left and right children.
+
+*   **Primary Use Case:**
+    To access elements in a BST in sorted order.
+---
+
+### 2. Pre-Order Traversal (Root, Left, Right)
+
+*   **The Rule:** For any given node, you **process the node itself first**, then recursively visit its entire **left subtree**, and finally recursively visit its entire **right subtree**.
+
+*   **The "Why":** It's called "Pre-Order" because you process the root *before* its children.
+
+*   **Primary Use Case:**
+    To create a copy of the tree. When you insert nodes into an empty tree in Pre-Order sequence, you reconstruct the *exact same tree structure*. This is useful for saving a tree's state to a file and loading it back later.
+
+---
+
+### 3. Post-Order Traversal (Left, Right, Root)
+
+*   **The Rule:** For any given node, you recursively visit its entire **left subtree**, then recursively visit its entire **right subtree**, and finally, **process the node itself**.
+
+*   **The "Why":** It's called "Post-Order" because you process the root *after* (or post) its children.
+
+*   **Primary Use Case:**
+    **To delete the nodes of a tree.** Because you process the children before the parent, you can safely delete a node without losing the pointers to its children (which would cause a memory leak). You delete the leaves first and work your way up to the root.
+    - so deleting entire tree do post order, or deleting subtree first traverse to the root, then do post order deletion on that root.
+
+---
+
+### Summary Table
+
+| Traversal Name | Order                | Primary Use Case                                     |
+| :------------- | :------------------- | :--------------------------------------------------- |
+| **In-Order**   | `Left, Root, Right`  | Getting elements from a BST in sorted order.         |
+| **Pre-Order**  | `Root, Left, Right`  | Copying a tree or serializing it for reconstruction. |
+| **Post-Order** | `Left, Right, Root`  | Deleting or freeing the nodes of a tree.             |
 
 ---
 
